@@ -61,13 +61,18 @@
         }
 
         const data = await response.json();
+
+        if (data.cod !== 200) {
+          throw new Error("Invalid location or data not found.");
+        }
+
         const weatherDescription = data.weather[0].description;
         const weatherIcon = data.weather[0].icon;
 
         let weatherReport = "";
         let weatherImage = "";
 
-        // Decide the weather report based on the description
+        // Map weather description to weather report and image
         if (weatherDescription.includes("clear")) {
           weatherReport = "Sunny";
           weatherImage = "https://img.icons8.com/ios/452/sun.png";
@@ -79,7 +84,7 @@
           weatherImage = "https://img.icons8.com/ios/452/windy-weather.png";
         } else {
           weatherReport = "Cloudy";
-          weatherImage = "wind.png";
+          weatherImage = "https://img.icons8.com/ios/452/cloud.png";
         }
 
         document.getElementById('weatherInfo').innerHTML = `
@@ -97,3 +102,4 @@
   </script>
 </body>
 </html>
+
